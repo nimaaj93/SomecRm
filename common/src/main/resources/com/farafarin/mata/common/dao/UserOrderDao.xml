@@ -1,0 +1,254 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farafarin.mata.common.dao.UserOrderDao">
+
+    <select id="retrieveUserOrders" resultType="com.farafarin.mata.common.entity.UserOrderEntity">
+        SELECT
+        mo.order_id orderId
+        ,mo.user_id userId
+        ,mo.category_id categoryId
+        ,mo.amount amount
+        ,mo.order_status orderStatus
+        ,mo.description description
+        ,mo.create_date createDate
+        ,mo.create_user_name createUserName
+        ,mo.update_date updateDate
+        ,mo.update_user_name updateUserName
+        ,mo.order_number orderNumber
+        ,mu.first_name_fa firstNameFa
+        ,mu.last_name_fa lastNameFa
+        ,mu.first_name_en firstNameEn
+        ,mu.last_name_en lastNameEn
+        ,mu.national_code nationalCode
+        ,mu.phone_number phoneNumber
+        ,ua.address_fa addressFa
+        ,ua.address_en addressEn
+        ,ua.city_fa cityFa
+        ,ua.city_en cityEn
+        ,mof.file_name uploadedFileName
+        FROM
+        core.mata_order mo
+        INNER JOIN
+        core.mata_user mu
+        ON
+        (mu.user_id = mo.user_id)
+        INNER JOIN
+        core.mata_user_address ua
+        ON
+        (ua.address_id = mo.address_id)
+        LEFT OUTER JOIN
+        core.mata_order_file mof
+        ON
+        (mof.file_order_id = mo.order_id )
+        WHERE
+        1 = 1
+        <if test="so.nationalCode != null and so.nationalCode != '' ">
+            AND
+            mu.national_code = #{so.nationalCode}
+        </if>
+        <if test="so.phoneNumber != null and so.phoneNumber != '' ">
+            AND
+            mu.phone_number = #{so.phoneNumber}
+        </if>
+        <if test="so.fromDate != null">
+            AND
+            mo.create_date <![CDATA[>=]]> #{so.fromDate}
+        </if>
+        <if test="so.toDate != null">
+            AND
+            mo.create_date <![CDATA[<=]]> #{so.toDate}
+        </if>
+        <if test="so.orderStatus != null">
+            AND
+            mo.order_status = #{so.orderStatus}
+        </if>
+        <if test="so.firstNameFa != null and so.firstNameFa != ''">
+            AND
+            mu.first_name_fa LIKE #{so.firstNameFa}
+        </if>
+        <if test="so.lastNameFa != null  and so.lastNameFa != ''">
+            AND
+            mu.last_name_fa LIKE #{so.lastNameFa}
+        </if>
+        order by order_id
+        LIMIT #{so.pageSize}
+        OFFSET #{so.offset}
+    </select>
+    <insert id="insertUserOrder"
+            parameterType="com.farafarin.mata.common.entity.UserOrderEntity"
+            keyProperty="model.orderId"
+            keyColumn="order_id"
+            useGeneratedKeys="true">
+        INSERT INTO core.mata_order
+        (
+            user_id
+            ,category_id
+            ,order_status
+            ,description
+            ,address_id
+            ,order_number
+            ,create_date
+            ,create_user_name
+            ,update_date
+            ,update_user_name
+        )
+        VALUES
+        (
+            #{model.userId}
+            ,#{model.categoryId}
+            ,#{model.orderStatus}
+            ,#{model.description}
+            ,#{model.addressId}
+            ,#{model.orderNumber}
+            ,#{model.createDate}
+            ,#{model.createUserName}
+            ,#{model.updateDate}
+            ,#{model.updateUserName}
+        )
+
+    </insert>
+
+    <select id="getUserOrderCount" resultType="java.lang.Long">
+        SELECT
+        COUNT
+        (order_id)
+        FROM
+        core.mata_order mo
+        INNER JOIN
+        core.mata_user mu
+        on
+        (mu.user_id = mo.user_id)
+        WHERE
+        1 = 1
+        <if test="so.nationalCode != null and so.nationalCode != '' ">
+            AND
+            mu.national_code = #{so.nationalCode}
+        </if>
+        <if test="so.phoneNumber != null and so.phoneNumber != '' ">
+            AND
+            mu.phone_number = #{so.phoneNumber}
+        </if>
+        <if test="so.fromDate != null">
+            AND
+            mo.create_date <![CDATA[>=]]> #{so.fromDate}
+        </if>
+        <if test="so.toDate != null">
+            AND
+            mo.create_date <![CDATA[<=]]> #{so.toDate}
+        </if>
+        <if test="so.orderStatus != null">
+            AND
+            mo.order_status = #{so.orderStatus}
+        </if>
+        <if test="so.firstNameFa != null and so.firstNameFa != ''">
+            AND
+            mu.first_name_fa LIKE #{so.firstNameFa}
+        </if>
+        <if test="so.lastNameFa != null  and so.lastNameFa != ''">
+            AND
+            mu.last_name_fa LIKE #{so.lastNameFa}
+        </if>
+    </select>
+
+    <update id="updateUserOrder">
+
+        UPDATE
+            core.mata_order
+        SET
+        <if test="model.status != null">
+            order_status = #{model.status},
+        </if>
+        <if test="model.amount != null">
+            amount = #{model.amount},
+        </if>
+        <if test="model.description != null and model.description != ''">
+            description = #{model.description},
+        </if>
+        <if test="model.addressId != null">
+            address_id = #{model.addressId},
+        </if>
+            update_date = #{model.updateDate},
+            update_user_name = #{model.updateUserName}
+        WHERE
+            order_id = #{model.orderId}
+
+    </update>
+
+    <select id="retrieveUserOrderById" resultType="com.farafarin.mata.common.entity.UserOrderEntity">
+        SELECT
+            mo.order_id orderId
+            ,mo.user_id userId
+            ,mo.category_id categoryId
+            ,mo.amount amount
+            ,mo.order_status orderStatus
+            ,mo.description description
+            ,mu.phone_number phoneNumber
+        FROM
+            core.mata_order mo
+        INNER JOIN core.mata_user  mu
+            on(mo.user_id = mu.user_id)
+        WHERE
+            order_id = #{orderId}
+    </select>
+
+    <select id="getOrderCountByUserIdAndStatus" resultType="java.lang.Long">
+        SELECT
+        COUNT
+            (order_id)
+        FROM
+            core.mata_order
+        WHERE
+            user_id = #{userId}
+        AND
+            order_status in
+            <foreach collection="orderStatusList" item="status" open="(" close=")" separator=",">
+                #{status}
+            </foreach>
+    </select>
+
+    <select id="getOrderByUserIdAndStatus" resultType="com.farafarin.mata.common.entity.UserOrderReportEntity">
+        SELECT
+            mo.order_id orderId
+            ,mo.user_id userId
+            ,mo.category_id categoryId
+            ,mo.amount amount
+            ,mo.order_status orderStatus
+            ,mo.description description
+            ,mo.order_number orderNumber
+            ,mo.create_date createDate
+            ,mo.create_user_name createUserName
+            ,mo.update_date updateDate
+            ,mo.update_user_name updateUserName
+            ,ua.address_fa addressFa
+            ,ua.address_en addressEn
+            ,ua.city_fa cityFa
+            ,ua.city_en cityEn
+        FROM
+            core.mata_order mo
+        INNER JOIN
+            core.mata_user_address ua
+        ON
+            (ua.address_id = mo.address_id)
+        WHERE
+            mo.user_id = #{userId}
+        AND
+            mo.order_status in
+            <foreach collection="orderStatusList" item="status" open="(" close=")" separator=",">
+              #{status}
+            </foreach>
+        order by order_id DESC
+            LIMIT #{pageSize}
+            OFFSET #{offset}
+
+    </select>
+
+    <update id="cancelOrder">
+        UPDATE
+          core.mata_order
+        SET
+          order_status = 404
+        WHERE
+          order_id = #{orderId}
+    </update>
+
+</mapper>

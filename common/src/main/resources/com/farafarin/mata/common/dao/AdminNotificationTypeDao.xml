@@ -1,0 +1,19 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farafarin.mata.common.dao.AdminNotificationTypeDao">
+   <select id="getAdminNotificationType" resultType="com.farafarin.mata.common.entity.AdminNotificationTypeEntity">
+       SELECT
+           notification_type_id notificationTypeId
+           ,notification_type notificationType
+           ,notification_template notificationTemplate
+           ,create_date createDate
+           ,create_user_name createUserName
+           ,update_date updateDate
+           ,update_user_name updateUserName
+       FROM
+          core.mata_admin_notification_type
+       WHERE
+          notification_type = #{notificationType}
+   </select>
+    
+</mapper>

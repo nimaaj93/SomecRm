@@ -1,0 +1,324 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farafarin.mata.common.dao.UserDao">
+    <insert id="insertUserPersonalInfo"
+            parameterType="com.farafarin.mata.common.entity.UserPersonalEntity"
+            keyProperty="model.userId"
+            keyColumn="user_id"
+            useGeneratedKeys="true">
+        INSERT INTO core.mata_user
+        (
+            first_name_fa
+            ,last_name_fa
+            ,first_name_en
+            ,last_name_en
+            ,national_code
+            ,phone_number
+            ,email
+            ,expire_date
+            ,status
+            ,user_type
+            ,birth_date
+            ,corporate_user_id
+            ,cretae_date
+            ,create_user_name
+            ,update_date
+            ,update_user_name
+            )
+      VALUES
+      (
+             #{model.firstNameFa}
+             ,#{model.lastNameFa}
+             ,#{model.firstNameEn}
+             ,#{model.lastNameEn}
+             ,#{model.nationalCode}
+             ,#{model.phoneNumber}
+             ,#{model.email}
+             ,#{model.expireDate}
+             ,#{model.status}
+             ,#{model.userType}
+             ,#{model.birthDate}
+             ,#{model.corporateUserId}
+             ,#{model.createDate}
+             ,#{model.createUserName}
+             ,#{model.updateDate}
+             ,#{model.updateUserName}
+      )
+    </insert>
+
+    <select id="retrieveUsers" resultType="com.farafarin.mata.common.dto.UserPersonalDto">
+        SELECT
+
+            first_name_fa firstNameFa
+            ,last_name_fa lastNameFa
+            ,first_name_en firstNameEn
+            ,last_name_en lastNameEn
+            ,national_code nationalCode
+            ,phone_number phoneNumber
+            ,email email
+            ,birth_date jalaliBirthDate
+            ,status status
+            ,expire_date jalaliExpireDate
+        FROM
+            core.mata_user
+        WHERE
+          1 = 1
+        <if test="so.nationalCode != null and so.nationalCode != '' "  >
+            AND
+            national_code = #{so.nationalCode}
+        </if>
+        <if test="so.phoneNumber != null and so.phoneNumber != '' ">
+            AND
+            phone_number = #{so.phoneNumber}
+        </if>
+        <if test="so.userType != null and so.userType != '' ">
+            AND
+            user_type = #{so.userType}
+        </if>
+        <if test="so.firstNameFa != null and so.firstNameFa != '' ">
+            AND
+            first_name_fa LIKE #{so.firstNameFa}
+        </if>
+        <if test="so.lastNameFa != null and so.lastNameFa != '' ">
+            AND
+            last_name_fa LIKE #{so.lastNameFa}
+        </if>
+        <if test="so.corporateUserId != null">
+            AND
+            corporate_user_id = #{so.corporateUserId}
+        </if>
+        order by user_id
+        LIMIT #{so.pageSize}
+        OFFSET #{so.offset}
+    </select>
+
+    <select id="retrieveUserByNationalCode" resultType="com.farafarin.mata.common.entity.UserPersonalEntity">
+        SELECT
+            user_id userId
+            ,first_name_fa firstNameFa
+            ,last_name_fa lastNameFa
+            ,first_name_en firstNameEn
+            ,last_name_en lastNameEn
+            ,national_code nationalCode
+            ,phone_number phoneNumber
+            ,email email
+            ,expire_date expireDate
+            ,birth_date birthDate
+            ,status status
+            ,cretae_date createDate
+            ,create_user_name createUserName
+            ,update_date updateDate
+            ,update_user_name updateUserName
+        FROM
+            core.mata_user
+        WHERE
+            national_code = #{nationalCode}
+    </select>
+
+    <select id="retrieveUserDtoByNationalCode" resultType="com.farafarin.mata.common.dto.UserPersonalDto">
+        SELECT
+            u.first_name_fa firstNameFa
+            ,u.last_name_fa lastNameFa
+            ,u.first_name_en firstNameEn
+            ,u.last_name_en lastNameEn
+            ,u.national_code nationalCode
+            ,u.phone_number phoneNumber
+            ,u.email email
+            ,u.expire_date jalaliExpireDate
+            ,u.birth_date jalaliBirthDate
+            ,u.status status
+            ,u.cretae_date createDate
+            ,u.create_user_name createUserName
+            ,u.update_date updateDate
+            ,u.update_user_name updateUserName
+            ,cu.corportae_user_name_fa corporateUserNameFa
+            ,cu.corportae_user_name_en corporateUserNameEn
+        FROM
+            core.mata_user u
+        LEFT OUTER JOIN
+            core.mata_corporate_user cu
+            ON u.corporate_user_id = cu.corprate_user_id
+        WHERE
+            national_code = #{nationalCode}
+    </select>
+
+    <update id="editUserPersonalInfo" parameterType="com.farafarin.mata.common.entity.UserPersonalEntity">
+        UPDATE core.mata_user
+        SET
+            first_name_fa = #{model.firstNameFa}
+           , last_name_fa=#{model.lastNameFa}
+           , first_name_en=#{model.firstNameEn}
+           , last_name_en=#{model.lastNameEn}
+           , email=#{model.email}
+           , birth_date = #{model.birthDate}
+        WHERE
+          national_code = #{model.nationalCode};
+    </update>
+
+    <update id="updateUserStatus">
+
+        UPDATE core.mata_user
+        SET
+           status = #{status}
+        WHERE
+          national_code= #{nationalCode};
+
+    </update>
+
+    <select id="getUsersCount" resultType="java.lang.Long">
+        SELECT
+        COUNT
+            (national_code)
+        FROM
+            core.mata_user
+        WHERE
+        1 = 1
+        <if test="so.nationalCode != null and so.nationalCode != '' "  >
+            AND
+           national_code = #{so.nationalCode}
+        </if>
+        <if test="so.phoneNumber != null and so.phoneNumber != '' ">
+            AND
+            phone_number = #{so.phoneNumber}
+        </if>
+        <if test="so.userType != null and so.userType != '' ">
+            AND
+            user_type = #{so.userType}
+        </if>
+        <if test="so.firstNameFa != null and so.firstNameFa != '' ">
+            AND
+            first_name_fa LIKE #{so.firstNameFa}
+        </if>
+        <if test="so.lastNameFa != null and so.lastNameFa != '' ">
+            AND
+            last_name_fa LIKE #{so.lastNameFa}
+        </if>
+        <if test="so.corporateUserId != null">
+            AND
+            corporate_user_id = #{so.corporateUserId}
+        </if>
+    </select>
+
+    <select id="retrieveNearExpireMataUsers" resultType="com.farafarin.mata.common.dto.UserPersonalDto">
+        SELECT
+            first_name_fa firstNameFa
+            ,last_name_fa lastNameFa
+            ,first_name_en firstNameEn
+            ,last_name_en lastNameEn
+            ,national_code nationalCode
+            ,phone_number phoneNumber
+            ,email email
+            ,birth_date jalaliBirthDate
+            ,status status
+            ,expire_date jalaliExpireDate
+        FROM
+          core.mata_user
+        WHERE
+            (SELECT DATE_PART('day', expire_date::timestamp - CURRENT_DATE::timestamp) <![CDATA[<]]> 7)
+        AND
+            user_type = #{userType}
+        order by user_id
+          LIMIT #{pageSize}
+          OFFSET #{offset}
+    </select>
+
+    <select id="getNearExpireUsersCount" resultType="java.lang.Long">
+        SELECT
+        COUNT
+            (national_code)
+        FROM
+            core.mata_user
+        WHERE
+            (SELECT DATE_PART('day', expire_date::timestamp - CURRENT_DATE::timestamp) <![CDATA[<]]> 7)
+        AND
+            user_type = #{userType}
+    </select>
+
+
+    <select id="retrieveUserByNationalCodeAndPhoneNumber" resultType="com.farafarin.mata.common.entity.UserPersonalEntity">
+        SELECT
+        user_id userId
+        ,first_name_fa firstNameFa
+        ,last_name_fa lastNameFa
+        ,first_name_en firstNameEn
+        ,last_name_en lastNameEn
+        ,national_code nationalCode
+        ,phone_number phoneNumber
+        ,email email
+        ,expire_date expireDate
+        ,birth_date birthDate
+        ,status status
+        ,cretae_date createDate
+        ,create_user_name createUserName
+        ,update_date updateDate
+        ,update_user_name updateUserName
+        FROM
+        core.mata_user
+        WHERE
+        1 = 1
+        <if test="nationalCode != null and nationalCode != '' "  >
+            AND
+            national_code = #{nationalCode}
+        </if>
+    </select>
+
+    <select id="getActiveUsersCount" resultType="java.lang.Long">
+        SELECT
+            COUNT
+            (user_id)
+        FROM
+        core.mata_user
+        WHERE
+            user_type = #{userType}
+            AND
+            status = 100
+    </select>
+
+    <select id="getCorporateUsersForParent" resultType="com.farafarin.mata.common.dto.UserPersonalDto">
+        SELECT
+            first_name_fa firstNameFa
+            ,last_name_fa lastNameFa
+            ,first_name_en firstNameEn
+            ,last_name_en lastNameEn
+            ,national_code nationalCode
+            ,phone_number phoneNumber
+            ,email email
+            ,expire_date jalaliExpireDate
+            ,birth_date jalaliBirthDate
+            ,status status
+            ,corporate_user_id corporateUserId
+        FROM
+          core.mata_user
+        WHERE
+          corporate_user_id = #{corporateUserId}
+
+    </select>
+
+    <select id="searchUsers" resultType="com.farafarin.mata.common.dto.UserPersonalDto">
+        SELECT
+            first_name_fa firstNameFa
+            ,last_name_fa lastNameFa
+            ,national_code nationalCode
+            ,phone_number phoneNumber
+            ,user_id userId
+            ,email email
+        FROM
+          core.mata_user
+        WHERE
+          user_type = 300
+
+          <if test="model.query != null and model.query != ''">
+              AND (
+                  first_name_fa LIKE #{model.queryLike}
+                  OR
+                  last_name_fa LIKE #{model.queryLike}
+                  OR
+                  national_code = #{model.query}
+                  OR
+                  phone_number = #{model.query}
+              )
+          </if>
+        LIMIT 10
+    </select>
+
+</mapper>

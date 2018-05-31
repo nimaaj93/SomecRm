@@ -1,0 +1,137 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farafarin.mata.common.dao.CorporateUserDao">
+
+    <insert id="insertCorporateUser"
+            parameterType="com.farafarin.mata.common.entity.CorporateUserEntity"
+            keyProperty="model.corporateUserId"
+            keyColumn="corprate_user_id"
+            useGeneratedKeys="true">
+
+        INSERT INTO core.mata_corporate_user
+        (
+        corportae_user_name_fa,
+        corportae_user_name_en,
+        company_id,
+        status,
+        expire_date,
+        city_fa,
+        city_en,
+        address_fa,
+        address_en,
+        phone_number,
+        create_date,
+        create_user_name,
+        update_date,
+        update_user_name
+        )
+        VALUES
+        (
+
+        #{model.nameFa}
+        ,#{model.nameEn}
+        ,#{model.companyId}
+        ,#{model.status}
+        ,#{model.expireDate}
+        ,#{model.cityFa}
+        ,#{model.cityEn}
+        ,#{model.addressFa}
+        ,#{model.addressEn}
+        ,#{model.phoneNumber}
+        ,#{model.createDate}
+        ,#{model.createUserName}
+        ,#{model.updateDate}
+        ,#{model.updateUserName}
+        )
+
+
+    </insert>
+
+    <select id="retrieveCorporateUser" resultType="com.farafarin.mata.common.dto.CorporateUserDto">
+        <include refid="commonSelect"/>
+        WHERE
+            corprate_user_id = #{corporateUserId}
+    </select>
+
+    <sql id="commonSelect">
+        SELECT
+            corprate_user_id corporateUserId,
+            corportae_user_name_fa nameFa,
+            corportae_user_name_en nameEn,
+            company_id companyId,
+            status status,
+            expire_date jalaliExpireDate,
+            city_fa cityFa,
+            city_en cityEn,
+            address_fa addressFa,
+            address_en addressEn,
+            phone_number phoneNumber
+        FROM
+            core.mata_corporate_user
+    </sql>
+
+    <update id="updateStatus">
+        UPDATE
+          core.mata_corporate_user
+        SET
+          status = #{status}
+        WHERE
+          corprate_user_id = #{id}
+    </update>
+
+    <select id="countCorporateUser" resultType="java.lang.Integer">
+        SELECT
+          COUNT(corprate_user_id)
+        FROM
+          core.mata_corporate_user
+        WHERE
+          1 = 1
+          <include refid="listWhereQuery"/>
+    </select>
+
+    <select id="getCorporateUsersList" resultType="com.farafarin.mata.common.dto.CorporateUserDto">
+        <include refid="commonSelect"/>
+        WHERE
+          1 = 1
+          <include refid="listWhereQuery"/>
+        ORDER BY
+          corprate_user_id
+        LIMIT #{so.pageSize}
+        OFFSET #{so.offset}
+    </select>
+
+    <sql id="listWhereQuery">
+        <if test="so.nameFa != null and so.nameFa != ''">
+            AND
+            corportae_user_name_fa LIKE #{so.nameFa}
+        </if>
+        <if test="so.nameEn != null and so.nameEn != ''">
+            AND
+            corportae_user_name_en LIKE #{so.nameEn}
+        </if>
+        <if test="so.companyId != null and so.companyId != ''">
+            AND
+            company_id LIKE #{so.companyId}
+        </if>
+    </sql>
+
+    <update id="updateCorporateUser">
+        UPDATE
+          core.mata_corporate_user
+        SET
+          corportae_user_name_fa = #{model.nameFa},
+          corportae_user_name_en = #{model.nameEn},
+          company_id = #{model.companyId},
+          expire_date = #{model.expireDate},
+          city_fa = #{model.cityFa},
+          city_en = #{model.cityEn},
+          address_fa = #{model.addressFa},
+          address_en = #{model.addressEn},
+          phone_number = #{model.phoneNumber},
+          update_date = #{model.updateDate},
+          update_user_name = #{model.updateUserName}
+        WHERE
+          corprate_user_id = #{model.corporateUserId}
+    </update>
+
+</mapper>

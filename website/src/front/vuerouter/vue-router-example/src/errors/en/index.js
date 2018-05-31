@@ -1,0 +1,15 @@
+export default {
+  'common.form.validation.failed':'Invalid input data found!',
+  'invalid.authorization.code':'Invalid authorization code',
+  'bad.credential':'Invalid username or password',
+  'username.not.found':'Invalid username',
+  'order.submition.exception':'Error in order submit',
+  'unknown.exception':'Internal server error',
+  'common.form.required.error':'Please fill in required fields.',
+  'server.connection.failed':'Server connection error',
+  'pass.confirm.not.matched':'Password and confirm do not match',
+  'pass.min.length.violated':'Your password should contain at least 6 characters.',
+  'invalid.input.data':'Invalid input data',
+  'user.inactive':'Your account has been deactivated',
+  'user.expired':'Your account has been expired',
+}

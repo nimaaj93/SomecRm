@@ -1,0 +1,115 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farafarin.mata.common.dao.UserSignUpRequestDao">
+    <insert id="insertUserSignUpRequest" parameterType="com.farafarin.mata.common.entity.UserSignUpRequestEntity"
+            keyProperty="model.signUpRequestId"
+            keyColumn="signup_request_id"
+            useGeneratedKeys="true">
+        INSERT INTO core.mata_signup_request
+        (
+            first_name_fa
+            ,last_name_fa
+            ,phone_number
+            ,email
+            ,learn_method
+            ,description
+            ,create_date
+            ,signup_request_status
+        )
+        VALUES
+        (
+            #{model.firstNameFa}
+            ,#{model.lastNameFa}
+            ,#{model.phoneNumber}
+            ,#{model.email}
+            ,#{model.learnMethod}
+            ,#{model.description}
+            ,#{model.createDate}
+            ,#{model.status}
+        )
+    </insert>
+
+    <select id="retrieveUserSignUpRequestList" resultType="com.farafarin.mata.common.dto.UserSignUpRequestDto">
+        SELECT
+            signup_request_id signUpRequestId
+          ,first_name_fa firstNameFa
+          ,last_name_fa lastNameFa
+          ,phone_number phoneNumber
+          ,email email
+          ,learn_method learnMethod
+          ,description description
+          ,create_date jalaliRequestDate
+          ,signup_request_status status
+
+        FROM
+          core.mata_signup_request
+        WHERE
+        1 = 1
+        <if test="so.phoneNumber != null and so.phoneNumber != '' ">
+            AND
+            phone_number = #{so.phoneNumber}
+        </if>
+        <if test="so.firstNameFa != null and so.firstNameFa != '' ">
+            AND
+            first_name_fa LIKE #{so.firstNameFa}
+        </if>
+        <if test="so.lastNameFa != null and so.lastNameFa != '' ">
+            AND
+            last_name_fa LIKE #{so.lastNameFa}
+        </if>
+        AND signup_request_status IN
+        <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+            #{status}
+        </foreach>
+        order by
+            signup_request_id
+        DESC
+        LIMIT #{so.pageSize}
+        OFFSET #{so.offset}
+    </select>
+
+    <select id="getUserSignUpRequestCount" resultType="java.lang.Long">
+        SELECT
+        COUNT
+            (signup_request_id)
+        FROM
+            core.mata_signup_request
+        WHERE
+            1 = 1
+        <if test="phoneNumber != null and phoneNumber != '' ">
+            AND
+            phone_number = #{phoneNumber}
+        </if>
+        <if test="firstNameFa != null and firstNameFa != '' ">
+            AND
+            first_name_fa LIKE #{firstNameFa}
+        </if>
+        <if test="lastNameFa != null and lastNameFa != '' ">
+            AND
+            last_name_fa LIKE #{lastNameFa}
+        </if>
+    </select>
+
+    <update id="changeUserSignUpRequestStatus">
+
+        UPDATE core.mata_signup_request
+        SET
+            signup_request_status = #{status}
+            ,investigation_user_id = #{investigationUserId}
+        WHERE
+            phone_number= #{phoneNumber}
+        AND
+            signup_request_id = #{signUpRequestId}
+
+    </update>
+
+    <select id="getNewUserSignUpRequestCount" resultType="java.lang.Long">
+        SELECT
+            COUNT
+                (signup_request_id)
+        FROM
+            core.mata_signup_request
+        WHERE
+            signup_request_status = 201
+    </select>
+</mapper>

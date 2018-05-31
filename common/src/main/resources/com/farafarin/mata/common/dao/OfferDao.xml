@@ -1,0 +1,154 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farafarin.mata.common.dao.OfferDao">
+
+    <insert id="insertUserOffer"
+            parameterType="com.farafarin.mata.common.entity.OfferEntity"
+            keyProperty="model.offerId"
+            keyColumn="offer_id"
+            useGeneratedKeys="true">
+
+        INSERT INTO core.mata_offer
+        (
+            header,
+            description,
+            offer_expire_date,
+            offer_available_count,
+            offer_sender_user_id,
+            offer_status,
+            create_date,
+            create_user_name,
+            update_date,
+            update_user_name
+        )
+        VALUES
+        (
+            #{model.header},
+            #{model.description},
+            #{model.offerExpireDate},
+            #{model.offerCount},
+            #{model.senderUserId},
+            #{model.offerStatus},
+            #{model.createDate},
+            #{model.createUserName},
+            #{model.updateDate},
+            #{model.updateUserName}
+        )
+
+
+    </insert>
+
+    <select id="getOffers" resultType="com.farafarin.mata.common.dto.OfferDto">
+        select
+            mo.offer_id offerId
+            ,mo.header promotionHeader
+            ,mo.description description
+            ,mo.offer_expire_date jalaliExpireDate
+            ,mo.offer_available_count offerAvailableCount
+            ,mo.offer_status offerStatus
+            ,mu.first_name_fa senderFirstNameFa
+            ,mu.last_name_fa senderLastNameFa
+            ,mu.first_name_en senderFirstNameEn
+            ,mu.last_name_en senderLastNameEn
+            ,mo.create_date jalaliCreateDate
+        from
+            core.mata_offer mo
+        INNER JOIN
+            core.mata_user mu
+        ON
+            (mu.user_id = mo.offer_sender_user_id)
+        WHERE
+            offer_status = 600
+        <if test="so.fromDate != null">
+            AND
+            mo.create_date <![CDATA[>=]]> #{so.fromDate}
+        </if>
+        <if test="so.toDate != null">
+            AND
+            mo.create_date <![CDATA[<=]]> #{so.toDate}
+        </if>
+    </select>
+
+    <update id="updateOffer">
+
+        UPDATE
+            core.mata_offer
+        SET
+        <if test="model.header != null">
+            header = #{model.header},
+        </if>
+        <if test="model.description != null">
+            description = #{model.description},
+        </if>
+        <if test="model.expireDate != null">
+            offer_expire_date = #{model.expireDate},
+        </if>
+        <if test="model.availableCount != null">
+            offer_available_count = #{model.availableCount},
+        </if>
+        <if test="model.offerStatus != null">
+            offer_status = #{model.offerStatus},
+        </if>
+            update_date = #{model.updateDate},
+            update_user_name = #{model.updateUserName}
+        WHERE
+            offer_id = #{model.offerId}
+
+    </update>
+
+    <select id="getOfferCount" resultType="java.lang.Long">
+        SELECT
+        COUNT
+        (offer_id)
+        FROM
+        core.mata_offer
+        WHERE
+        offer_status = 600
+        <if test="so.fromDate != null">
+            AND
+            create_date <![CDATA[>=]]> #{so.fromDate}
+        </if>
+        <if test="so.toDate != null">
+            AND
+            create_date <![CDATA[<=]]> #{so.toDate}
+        </if>
+
+    </select>
+
+    <select id="getActiveOfferCount" resultType="java.lang.Long">
+        SELECT
+        COUNT
+            (offer_id)
+        FROM
+            core.mata_offer
+        WHERE
+            offer_expire_date <![CDATA[>]]> CURRENT_DATE
+        AND
+            offer_status = #{status}
+    </select>
+
+    <select id="getOffersByStatus" resultType="com.farafarin.mata.common.dto.OfferDto">
+        select
+            mo.offer_id offerId
+            ,mo.header promotionHeader
+            ,mo.description description
+            ,mo.offer_expire_date jalaliExpireDate
+            ,mo.offer_available_count offerAvailableCount
+            ,mo.offer_status offerStatus
+            ,mu.first_name_fa senderFirstNameFa
+            ,mu.last_name_fa senderLastNameFa
+            ,mu.first_name_en senderFirstNameEn
+            ,mu.last_name_en senderLastNameEn
+        from
+          core.mata_offer mo
+        INNER JOIN
+            core.mata_user mu
+        ON
+            (mu.user_id = mo.offer_sender_user_id)
+        WHERE
+            mo.offer_status = #{offerStatus}
+        ORDER BY
+            mo.offer_id DESC
+    </select>
+
+</mapper>

@@ -1,0 +1,56 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farafarin.mata.common.dao.UserAuthorizationCodeDao">
+
+    <insert id="create" parameterType="com.farafarin.mata.common.entity.UserAuthorizationCode">
+      INSERT INTO
+        core.mata_user_authorization_code (
+            user_id,
+            authorization_code,
+            expire_date,
+            used,
+            create_date,
+            create_user_name,
+            update_date,
+            update_user_name
+        ) VALUES (
+          #{userAuthorizationCode.userId},
+          #{userAuthorizationCode.authorizationCode},
+          #{userAuthorizationCode.expireDate},
+          false,
+          #{userAuthorizationCode.createDate},
+          #{userAuthorizationCode.createUserName},
+          #{userAuthorizationCode.updateDate},
+          #{userAuthorizationCode.updateUserName}
+        )
+    </insert>
+
+    <update id="updateStatus">
+      UPDATE
+        core.mata_user_authorization_code
+      SET
+        used = true,
+        update_date = #{userAuthorizationCode.updateDate},
+        update_user_name = #{userAuthorizationCode.updateUserName}
+      WHERE
+        id = #{id}
+    </update>
+
+    <select id="getLatestGeneratedToken" resultType="com.farafarin.mata.common.dto.UserAuthorizationCodeDto">
+      SELECT
+          id id,
+          user_id userId,
+          authorization_code authorizationCode,
+          expire_date expireDate,
+          used used,
+          create_date createDate
+      FROM
+          core.mata_user_authorization_code
+      WHERE
+          user_id = #{userId}
+      ORDER BY
+          id DESC
+      LIMIT 1
+    </select>
+
+</mapper>

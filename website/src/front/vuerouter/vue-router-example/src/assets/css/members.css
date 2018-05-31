@@ -1,0 +1,326 @@
+.btn{
+  color: #FFFFFF;
+  background-color: #1445a0;
+  border: 1px solid #1445a0;
+}
+
+.btn.highlight {
+  background-color: #FFFFFF;
+  color: #1445a0;
+  border: 1px solid #1445a0;
+}
+
+.btn.highlight:hover , .btn.highlight:focus , .btn.highlight:active {
+  color: #FFFFFF;
+}
+
+.btn:hover, .btn:active, .btn:focus{
+  background-color: #1957cf;
+  border: 1px solid #1445a0;
+}
+.inlineBtn{
+  padding: 1px 15px;
+  margin: 0 5px;
+}
+
+.mainBox .leftSide{
+  width: 700px;
+  float: left;
+}
+.mainBox .rightSide{
+  float: right;
+}
+.mainBox .logo{
+  width: 164px;
+  height: 70px;
+  margin: 0 auto;
+  float: left;
+}
+.mainBox .boxHeader {
+  display: inline-block;
+  width: 100%;
+}
+
+.mainBox {
+}
+
+.mainBox .boxContent{
+  /*box-shadow: 0 10px 12px #ffbd03;*/
+  /*background-image: url('../images/home_painter_bgd.jpg');*/
+  background-color: #1445a0;
+  padding: 22px;
+}
+.boxContentTitle{
+  text-align: center;
+  margin: -10px 0 10px;
+  font-size: 120%;
+}
+.boxContentMiddleTitle{
+  text-align: center;
+  margin: -10px 0 0;
+  font-size: 120%;
+}
+.boxContentMain, .boxContentNoScroll{
+  width: 100%;
+  height: 60vh;
+  overflow: auto;
+}
+.jspVerticalBar
+{
+  left: 0;
+  right: auto;
+  width: 7px;
+}
+.jspDrag {
+  background: #4d4d4d;
+  position: relative;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+.jspTrack {
+  background: #b3b3b3;
+  position: relative;
+}
+.newOrderBtn {
+  margin-top: 29px;
+  background-color: #ffbd03;
+  border: 1px solid #ffbd03;
+}
+
+.newOrderBtn:hover , .newOrderBtn:active , .newOrderBtn:focus {
+  background-color: #b88d03;
+  border: 1px solid #ffbd03;
+}
+
+.exitBtn {
+  margin: 32px 20px 0 10px;
+}
+/*  itemRow  */
+.itemRow{
+  height: 90px;
+  display: table;
+  width: 100%;
+  margin-bottom: 7px;
+}
+.itemRowTitle, .itemRowDescription{
+  min-height: 90px;
+  height: auto;
+  display: table-cell;
+  color: #fff;
+  padding: 7px 15px;
+}
+.itemRowTitle{
+  width: 25%;
+  background-color: #4D4D4D;
+  vertical-align: middle;
+  text-align: center;
+}
+.itemRowDescription{
+  width: 75%;
+  background-color: #23282D;
+  line-height: 1.5;
+  font-size: 90%;
+}
+.mainMenu {
+  position: relative;
+  top: 115px;
+  list-style: none;
+}
+.mainMenu a{
+  border: 0;
+  width: 224px;
+  height: 35px;
+  text-decoration: none;
+  color: #1445a0;
+  padding: 3px 15px;
+  display: block;
+  transition-duration: .3s;
+  background-color: #ffbd03;
+  font-size: 120%;
+  text-align: left;
+  float: left;
+  margin-bottom: 10px;
+
+}
+.mainMenu a:hover, .mainMenu a:focus, .mainMenu a:active{
+  /*    background-color: rgba(170,146,110,.5);*/
+  background-color: #5a7cdf;
+  color: #FFFFFF;
+}
+.mainMenu .active:hover, .mainMenu .active:focus, .mainMenu .active:active{
+  color: #fff;
+}
+.mainMenu a.active{
+  background-color: #1445a0;
+  color: #FFFFFF;
+}
+.mainMenu .notification {
+  font-size: 120%;
+  width: 35px;
+  height: 35px;
+  background-color: #F15A24;
+  color: #000;
+  text-align: center;
+  display: inline-block;
+  font-weight: bold;
+  float: right;
+  padding: 4px 0;
+}
+.shortcutBox{
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 30px;
+}
+.shortcut {
+  background-color: #ffbd03;
+  display: table;
+  border: 0;
+  text-align: center;
+  width: 100%;
+  float: right;
+  margin: 2px 0;
+  font-size: 90%;
+  vertical-align: middle;
+}
+.shortcut:hover{
+  color: #23282D;
+  background-color: #B3B3B3;
+}
+.shortcut span{
+  display: table-cell;
+  vertical-align: middle;
+}
+.col1Row, .col2Row, .col3Row{
+  display: table;
+  float: right;
+  width: 24.35%;
+  margin: 0 2px;
+}
+.col3Row .shortcut{
+  height: 30px;
+}
+.col2Row .shortcut{
+  height: 47px;
+}
+.col1Row .shortcut{
+  height: 98px;
+}
+.boxContentMain h5, .boxContentNoScroll h5{
+  margin-top: 0px;
+  text-align: center;
+  font-weight: 300;
+}
+select {
+  background: url('../images/triangleSouth.png') no-repeat 10px center #23282D;
+  color: #fff;
+  border: 1px solid #000;
+  width: 200px;
+  padding: 2px;
+  appearance:none;
+  -moz-appearance:none; /* Firefox */
+  -webkit-appearance:none; /* Safari and Chrome */
+}
+select option:hover {
+  color: #000;
+  background-color: #ccc;
+}
+textarea.description{
+  width: 100%;
+  height: 15vh;
+}
+.tabBox{
+
+}
+.tabTitle{
+  text-align: center;
+}
+.tabBtn{
+  display: inline-block;
+  cursor: pointer;
+  background-color: #999;
+  transition-duration: .5s;
+}
+.tabBox .tabContent {
+  background-color: #fff;
+  padding: 10px !important;
+  height: 59vh;
+  overflow: hidden;
+}
+.tabBox .boxContentMain {
+  height: 56vh;
+}
+.tabBox .boxContentNoScroll {
+  height: 56vh;
+  padding: 15px 15px 15px 20px;
+}
+.tabBtn.active{
+  background-color: #fff;
+}
+.tabBtn span{
+  height: 32px;
+  padding: 4px 10px;
+  min-width: 150px;
+  display: inline-block;
+}
+.tabBtn .notification {
+  font-size: 120%;
+  min-width: 35px;
+  width: 35px;
+  height: 35px;
+  background-color: #F15A24;
+  color: #000;
+  text-align: center;
+  display: inline-block;
+  font-weight: bold;
+  padding: 4px 0;
+}
+.tabBox .tab {
+  position: relative;
+  top: 0;
+  transition-duration: .5s;
+  float: right;
+  display: block;
+  width: 100%;
+  min-height: 370px;
+}
+.tabBox #tab1{
+  left: 0;
+}
+.tabBox #tab2{
+  left: -655px;
+  top: -56vh;
+}
+.tabBox #tab3{
+  left: -1310px;
+  top: -112vh;
+}
+.spliterLine {
+  background-color: #333;
+  width: 100%;
+  height: 2px;
+  display: inline-block;
+  margin: 15px 0;
+}
+.descriptBox{
+  padding: 20px !important;
+}
+.innerRow{
+  margin: 2px;
+}
+.innerRow .fixWidth {
+  width: 145px;
+  display: inline-block;
+}
+.innerRow input {
+  background-color: #23282D;
+  border: 0px solid #000;
+  color: #fff;
+  padding: 1px 10px;
+  width: 150px;
+}
+
+.mainBox.members {
+  right: -130px;
+  position: relative;
+}

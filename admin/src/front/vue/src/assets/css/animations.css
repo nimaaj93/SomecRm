@@ -1,0 +1,21 @@
+.fade-enter-active {
+    transition: opacity 1s
+}
+
+.fade-leave-active {
+  transition: opacity .3s
+}
+
+.fade-enter, .fade-leave-to  {
+  opacity: 0
+}
+
+/*general*/
+.form-submit {
+  opacity: 0.5;
+}
+
+/*rtl*/
+.float {
+  float: right;
+}

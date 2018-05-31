@@ -1,0 +1,150 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farafarin.mata.common.dao.UserTransactionDao">
+
+    <resultMap id="userTransactionDtoMap" type="com.farafarin.mata.common.dto.UserTransactionDto">
+
+        <id property="transactionId" column="transactionId"/>
+        <result property="userId" column="userId" />
+        <result property="amount" column="amount" />
+        <result property="lastBalance" column="lastBalance" />
+        <result property="debit" column="debit" />
+        <result property="transactionStatus" column="transactionStatus" />
+        <result property="transactionType" column="transactionType" />
+        <result property="jalaliTransactionDate" column="jalaliTransactionDate" />
+        <result property="transactionNumber" column="transactionNumber" />
+        <result property="transactionFollowupNumber" column="transactionFollowupNumber" />
+        <result property="jalaliCreateDate" column="jalaliCreateDate" />
+        <result property="createUser" column="createUser" />
+
+        <association property="userPersonalDto" javaType="com.farafarin.mata.common.dto.UserPersonalDto">
+            <result property="firstNameFa" column="firstNameFa"/>
+            <result property="lastNameFa" column="lastNameFa"/>
+            <result property="firstNameEn" column="firstNameEn"/>
+            <result property="lastNameEn" column="lastNameEn"/>
+            <result property="nationalCode" column="nationalCode"/>
+            <result property="phoneNumber" column="phoneNumber"/>
+            <result property="email" column="email"/>
+            <result property="jalaliBirthDate" column="jalaliBirthDate"/>
+            <result property="status" column="status"/>
+            <result property="jalaliExpireDate" column="jalaliExpireDate"/>
+        </association>
+
+    </resultMap>
+
+    <sql id="transactionSelectWhere">
+        WHERE
+        1 = 1
+        <if test="so.nationalCode != null and so.nationalCode != ''">
+            AND
+            u.national_code = #{so.nationalCode}
+        </if>
+        <if test="so.firstName != null and so.firstName != ''">
+            AND
+            u.first_name_fa = #{so.firstName}
+        </if>
+        <if test="so.lastName != null and so.lastName != ''">
+            AND
+            u.last_name_fa = #{so.lastName}
+        </if>
+        <if test="so.transactionNumber != null and so.transactionNumber != ''">
+            AND
+            tr.transaction_number = #{so.transactionNumber}
+        </if>
+        <if test="so.transactionFollowUpNumber != null and so.transactionFollowUpNumber != ''">
+            AND
+            tr.transaction_followup_number = #{so.transactionFollowUpNumber}
+        </if>
+        <if test="so.userId != null">
+            AND
+            tr.user_id = #{so.userId}
+        </if>
+    </sql>
+
+    <select id="getTransactions" resultMap="userTransactionDtoMap">
+        SELECT
+          tr.transaction_id transactionId,
+          tr.user_id userId,
+          tr.order_id orderId,
+          tr.amount amount,
+          tr.transaction_status transactionStatus,
+          tr.transaction_type transactionType,
+          tr.transaction_date jalaliTransactionDate,
+          tr.transaction_number transactionNumber,
+          tr.transaction_followup_number transactionFollowupNumber,
+          tr.last_balance lastBalance,
+          tr.is_debit debit,
+          tr.create_date jalaliCreateDate,
+          tr.create_user_name createUser,
+          u.first_name_fa firstNameFa,
+          u.last_name_fa lastNameFa,
+          u.first_name_en firstNameEn,
+          u.last_name_en lastNameEn,
+          u.national_code nationalCode,
+          u.phone_number phoneNumber,
+          u.email email,
+          u.birth_date jalaliBirthDate,
+          u.status status,
+          u.expire_date jalaliExpireDate
+        FROM
+          core.mata_user_transaction tr
+        INNER JOIN
+          core.mata_user u
+          ON tr.user_id = u.user_id
+        <include refid="transactionSelectWhere"/>
+        ORDER BY tr.transaction_id DESC
+        LIMIT #{so.pageSize}
+        OFFSET #{so.offset}
+    </select>
+
+    <select id="countTransactions" resultType="java.lang.Long">
+        SELECT
+          COUNT(tr.transaction_id)
+        FROM
+          core.mata_user_transaction tr
+        INNER JOIN
+          core.mata_user u
+          ON tr.user_id = u.user_id
+        <include refid="transactionSelectWhere"/>
+    </select>
+
+    <insert id="createTransaction"
+            parameterType="com.farafarin.mata.common.entity.UserTransactionEntity"
+            keyProperty="entity.transactionId"
+            keyColumn="transaction_id"
+            useGeneratedKeys="true">
+        INSERT INTO
+          core.mata_user_transaction
+          (user_id,
+          order_id,
+          amount,
+          transaction_status,
+          transaction_type,
+          transaction_date,
+          transaction_number,
+          transaction_followup_number,
+          last_balance,
+          is_debit,
+          create_date,
+          create_user_name,
+          update_date,
+          update_user_name)
+            VALUES (
+              #{entity.userId},
+              #{entity.orderId},
+              #{entity.amount},
+              #{entity.transactionStatus},
+              #{entity.transactionType},
+              #{entity.transactionDate},
+              #{entity.transactionNumber},
+              #{entity.transactionFollowupNumber},
+              #{entity.lastBalance},
+              #{entity.isDebit},
+              #{entity.createDate},
+              #{entity.createUserName},
+              #{entity.updateDate},
+              #{entity.updateUserName}
+            )
+    </insert>
+
+</mapper>

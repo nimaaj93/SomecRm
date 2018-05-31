@@ -1,0 +1,18 @@
+export default {
+  'email.invalid':'ایمیل نامعتبر است.',
+  'common.required':'فیلد اجباری است.',
+  'common.form.validation.failed':'فیلد های ورودی نادرست است.',
+  'national.code.duplicate':'کاربر با کد ملی وارد شده موجود است.',
+  'unknown.exception':'خطا در سرور',
+  'phonenumber.duplicate':'شماره موبایل در سیستم موجود است.',
+  'common.action.failed':'خطا در انجام عملیات',
+  'password.confirm.not.matched':'رمز عبور و تکرار آن برابر نیستند.',
+  'authentication.failed':'اطلاعات ورودی صحیح نیست.',
+  'user.expired':'حساب کاربری شما منقضی شده است.',
+  'user.inactive':'حساب کاربری شما غیر فعال شده است.',
+  'user.not.found':'کاربر با مشخصات وارد شده یافت نشد!',
+  'server.connection.failed':'خطا در ارتباط با سرور',
+  'insufficient.balance':'موجودی کاربر ناکافی می باشد.',
+  'please.choose.user':'کاربر را انتخاب نمایید.',
+  'invalid.input.data':'خطا در داده ورودی',
+}

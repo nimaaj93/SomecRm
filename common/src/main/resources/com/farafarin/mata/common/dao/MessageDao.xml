@@ -1,0 +1,136 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farafarin.mata.common.dao.MessageDao">
+
+    <insert id="insertMessage"
+            parameterType="com.farafarin.mata.common.entity.MessageEntity"
+            keyProperty="model.messageId"
+            keyColumn="message_id"
+            useGeneratedKeys="true">
+
+        INSERT INTO
+            core.mata_message
+            (
+                header,
+                description,
+                sender_user_id,
+                receiver_user_id,
+                seen_status,
+                create_date,
+                create_user_name,
+                update_date,
+                update_user_name
+            )
+            VALUES
+            (
+                #{model.header},
+                #{model.description},
+                #{model.senderUserId},
+                #{model.receiverUserId},
+                #{model.seenStatus},
+                #{model.createDate},
+                #{model.createUserName},
+                #{model.updateDate},
+                #{model.updateUserName}
+            )
+
+    </insert>
+
+    <select id="getUserMessages" resultType="com.farafarin.mata.common.dto.MessageDto">
+
+        SELECT
+            m.header messageHeader
+            ,m.description description
+            ,m.create_date jalaliSendDate
+            ,mu.first_name_fa senderFirstNameFa
+            ,mu.last_name_fa senderLastNameFa
+            ,mu.first_name_en senderFirstNameEn
+            ,mu.first_name_en senderLastNameEn
+            ,mmu.first_name_fa receiverFirstNameFa
+            ,mmu.last_name_fa receiverLastNameFa
+            ,mmu.first_name_en receiverFirstNameEn
+            ,mmu.last_name_en receiverLastNameEn
+        FROM
+            core.mata_message m
+        INNER JOIN
+            core.mata_user mu
+        ON
+            (mu.user_id = m.sender_user_id)
+        INNER JOIN
+            core.mata_user mmu
+        on
+            (mmu.user_id = m.receiver_user_id)
+
+        WHERE
+            1 = 1
+        <if test="so.receiverNationalCode != null and so.receiverNationalCode != '' ">
+            AND
+            mmu.national_code = #{so.receiverNationalCode}
+        </if>
+        <if test="so.receiverPhoneNumber != null and so.receiverPhoneNumber != '' ">
+            AND
+            mmu.phone_number = #{so.receiverPhoneNumber}
+        </if>
+        order by m.message_id desc
+        LIMIT #{so.pageSize}
+        OFFSET #{so.offset}
+
+    </select>
+
+    <select id="getUserMessageCount" resultType="java.lang.Long">
+        SELECT
+        COUNT
+        (message_id)
+        FROM
+        core.mata_message mm
+        INNER JOIN
+        core.mata_user mu
+        ON
+        (mu.user_id = mm.receiver_user_id)
+        WHERE
+        1=1
+        <if test="nationalCode != null and nationalCode != '' ">
+            AND
+            mu.national_code = #{nationalCode}
+        </if>
+        <if test="phoneNumber != null and phoneNumber != '' ">
+            AND
+            mu.phone_number = #{phoneNumber}
+        </if>
+
+    </select>
+
+    <select id="getUserNewMessageCount" resultType="java.lang.Long">
+        SELECT
+        COUNT
+        (message_id)
+        FROM
+        core.mata_message
+        WHERE
+        seen_status = #{messageStatus}
+        AND
+        receiver_user_id = #{userId}
+    </select>
+
+    <select id="getUserNewMessage" resultType="com.farafarin.mata.common.dto.UserMessageDto">
+        SELECT
+        header messageHeader
+        ,description description
+        FROM
+        core.mata_message
+        WHERE
+        receiver_user_id = #{userId}
+    </select>
+
+    <update id="updateUserMessageStatus">
+        UPDATE
+          core.mata_message
+        SET
+          seen_status = #{newStatus}
+        WHERE
+          receiver_user_id = #{receiverUserId}
+            AND
+          seen_status = #{currentStatus}
+    </update>
+
+</mapper>

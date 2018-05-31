@@ -1,0 +1,65 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farafarin.mata.common.dao.UserAddressDao">
+    <insert id="insertUserAddresses"
+            parameterType="com.farafarin.mata.common.entity.UserAddressEntity"
+            keyColumn="address_id"
+            keyProperty="model.addressId"
+            useGeneratedKeys="true">
+
+        INSERT INTO core.mata_user_address
+        (
+            address_fa
+            ,address_en
+            ,city_fa
+            ,city_en
+            ,cretae_date
+            ,create_user_name
+            ,update_date
+            ,update_user_name
+            ,user_id
+            ,address_status
+          )
+        VALUES
+         (
+            #{model.addressFa}
+            ,#{model.addressEn}
+            ,#{model.cityFa}
+            ,#{model.cityEn}
+            ,#{model.createDate}
+            ,#{model.createUserName}
+            ,#{model.updateDate}
+            ,#{model.updateUserName}
+            ,#{model.userId}
+            ,100
+          )
+
+
+    </insert>
+
+    <select id="retrieveUserAddresses" resultType="com.farafarin.mata.common.entity.UserAddressEntity">
+       SELECT
+           address_id addressId
+           ,address_fa addressFa
+           ,address_en addressEn
+           ,city_fa cityFa
+           ,city_en cityEn
+           ,user_id userId
+       FROM
+          core.mata_user_address
+       WHERE
+          user_id = #{userId}
+            AND
+          address_status = 100
+    </select>
+
+    <update id="deleteAddress">
+        UPDATE
+          core.mata_user_address
+        SET
+          address_status = 101
+        WHERE
+          address_id = #{addressId}
+    </update>
+
+</mapper>

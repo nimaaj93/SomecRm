@@ -1,0 +1,197 @@
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: 900;
+  src: url('./fonts/farsi/eot/IRANSansWeb_Black.eot');
+  src: url('./fonts/farsi/eot/IRANSansWeb_Black.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+  url('./fonts/farsi/woff2/IRANSansWeb_Black.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('./fonts/farsi/woff/IRANSansWeb_Black.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+  url('./fonts/farsi/ttf/IRANSansWeb_Black.ttf') format('truetype');
+}
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: bold;
+  src: url('./fonts/farsi/eot/IRANSansWeb_Bold.eot');
+  src: url('./fonts/farsi/eot/IRANSansWeb_Bold.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+  url('./fonts/farsi/woff2/IRANSansWeb_Bold.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('./fonts/farsi/woff/IRANSansWeb_Bold.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+  url('./fonts/farsi/ttf/IRANSansWeb_Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: 500;
+  src: url('./fonts/farsi/eot/IRANSansWeb_Medium.eot');
+  src: url('./fonts/farsi/eot/IRANSansWeb_Medium.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+  url('./fonts/farsi/woff2/IRANSansWeb_Medium.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('./fonts/farsi/woff/IRANSansWeb_Medium.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+  url('./fonts/farsi/ttf/IRANSansWeb_Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: 300;
+  src: url('./fonts/farsi/eot/IRANSansWeb_Light.eot');
+  src: url('./fonts/farsi/eot/IRANSansWeb_Light.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+  url('./fonts/farsi/woff2/IRANSansWeb_Light.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('./fonts/farsi/woff/IRANSansWeb_Light.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+  url('./fonts/farsi/ttf/IRANSansWeb_Light.ttf') format('truetype');
+}
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: 200;
+  src: url('./fonts/farsi/eot/IRANSansWeb_UltraLight.eot');
+  src: url('./fonts/farsi/eot/IRANSansWeb_UltraLight.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+  url('./fonts/farsi/woff2/IRANSansWeb_UltraLight.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('./fonts/farsi/woff/IRANSansWeb_UltraLight.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+  url('./fonts/farsi/ttf/IRANSansWeb_UltraLight.ttf') format('truetype');
+}
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: normal;
+  src: url('./fonts/farsi/eot/IRANSansWeb.eot');
+  src: url('./fonts/farsi/eot/IRANSansWeb.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+  url('./fonts/farsi/woff2/IRANSansWeb.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+  url('./fonts/farsi/woff/IRANSansWeb.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+  url('./fonts/farsi/ttf/IRANSansWeb.ttf') format('truetype');
+}
+
+html, body, h1, h2, h3, h4, h5, h6, p, a, li, ul, input, li>a, option {
+  font-family: IRANSans !important;
+}
+
+[v-cloak] {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #aa926e;
+  border-bottom: 16px solid #aa926e;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.router-view, .content-wrapper {
+  height: 100%;
+}
+
+.main-footer {
+  min-height: 50px;
+}
+
+.sidebar-title {
+  padding: 30px;
+  height: 30px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.treeview-menu li {
+  padding-right: 40px;
+}
+
+textarea.fixed {
+  width: 100%;
+}
+
+.address-radio {
+  margin: 10px 0;
+}
+
+.address-radio input {
+  position: absolute;
+  right: 40px;
+}
+
+.address-radio .radio-item {
+  border-radius: 7px;
+  padding: 10px;
+}
+
+.address-radio span {
+  margin: 20px;
+}
+
+.content-wrapper .content {
+    min-height: 600px;
+}
+
+.ltr {
+  direction: ltr;
+}
+
+.preserve-breaks {
+  white-space: pre-wrap;
+}
+
+.mobile-menu-toggle {
+  display: none;
+  transition: all .3s ease-out;
+}
+
+.main-sidebar {
+  transition: all .3s ease-out;
+}
+
+@media screen and (max-width: 760px) {
+  .main-sidebar {
+    position: relative;
+    float: none;
+    width:100%;
+  }
+  .sidebar-title {
+    display: none;
+  }
+
+  .sidebar-menu .header {
+    display: none;
+  }
+
+  .main-sidebar {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .mobile-menu-toggle {
+    display: block;
+    color: white;
+    font-size: 20px;
+    padding-top: 9px;
+    padding-right: 7px;
+  }
+
+  .main-sidebar {
+    display: none;
+  }
+
+}
+
+.dropdown-menu {
+  right: -95px;
+}
+
+.attachment-link {
+    direction: ltr !important;
+}

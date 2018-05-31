@@ -1,0 +1,55 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farafarin.mata.common.dao.AdminNotificationDao">
+    <insert id="insertAdminNotification"
+            parameterType="com.farafarin.mata.common.entity.AdminNotificationEntity"
+            keyProperty="model.notificationId"
+            keyColumn="notification_id"
+            useGeneratedKeys="true">
+        INSERT INTO
+        core.mata_admin_notification
+        (
+            notification_type,
+            expire_date,
+            notification_text,
+            create_date,
+            create_user_name,
+            update_date,
+            update_user_name
+        )
+        VALUES
+        (
+            #{model.notificationType}
+            ,#{model.expireDate}
+            ,#{model.notificationText}
+            ,#{model.createDate}
+            ,#{model.createUserName}
+            ,#{model.updateDate}
+            ,#{model.updateUserName}
+        )
+    </insert>
+
+    <select id="getNotifications" resultType="com.farafarin.mata.common.dto.AdminNotificationDto">
+        SELECT
+            notification_id id,
+            notification_type notificationType
+            ,notification_text notificationText
+            ,create_date notificationDate
+        FROM
+            core.mata_admin_notification
+        WHERE
+            CURRENT_DATE <![CDATA[<]]> expire_date
+        OFFSET #{so.offset}
+        LIMIT #{so.pageSize}
+    </select>
+
+    <select id="getNotificationsCount" resultType="java.lang.Integer">
+        SELECT
+            COUNT(notification_id)
+        FROM
+            core.mata_admin_notification
+        WHERE
+            CURRENT_DATE <![CDATA[<]]> expire_date
+    </select>
+
+</mapper>

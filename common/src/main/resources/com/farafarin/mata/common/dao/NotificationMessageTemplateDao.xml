@@ -1,0 +1,15 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farafarin.mata.common.dao.NotificationMessageTemplateDao">
+
+    <select id="retrieveTemplateById" resultType="com.farafarin.mata.common.dto.NotificationMessageTemplateDto">
+        SELECT
+            id id,
+            msg_template messageTemplate
+        FROM
+            core.mata_notification_message_template
+        WHERE
+            id = #{id}
+    </select>
+
+</mapper>

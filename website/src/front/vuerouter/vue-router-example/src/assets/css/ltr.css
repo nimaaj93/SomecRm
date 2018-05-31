@@ -1,0 +1,92 @@
+.ltr {
+    direction: ltr;
+}
+.ltr .left{
+    float: right;
+}
+.ltr .right{
+    float: left;
+}
+.ltr .group2col input,.ltr .group2col select,.ltr .group2col textarea {
+    float: left;
+}
+.ltr .group2col input:first-child{
+    margin-right: 20px;
+}
+.ltr .note {
+    color: #fff;
+    font-size: 12pt;
+}
+.ltr .mainBox.members {
+    left: -130px;
+    position: relative;
+}
+@media screen and (max-width: 1200px) {
+    .ltr .mainBox.members {
+        left: -65px !important;
+    }
+}
+@media screen and (max-width: 1100px) {
+    .ltr .mainBox.members {
+        left: -30px !important;
+    }
+}
+@media screen and (max-width: 1010px) {
+    .ltr .mainBox.members {
+        left: 0px !important;
+    }
+}
+.ltr .mainBox .logo {
+    float: right;
+}
+.ltr .mainBox .rightSide {
+    float: left;
+}
+.ltr .jspVerticalBar {
+    right: 0;
+    left: auto;
+}
+.ltr .mainMenu a {
+    text-align: right;
+    float: right;
+}
+.ltr .mainMenu .notification {
+    float: right;
+}
+
+.ltr select {
+  background: url('../images/triangleSouth.png') no-repeat 180px center #23282D;
+}
+
+@media screen and (max-width: 1100px) {
+  .ltr .mobileMenu span{
+    width: 20px;
+    height: 2px;
+    margin: 5px 0;
+    display: block;
+    background-color: #fff;
+  }
+  .ltr .mobileMenu {
+    float: left;
+    margin: 29px 10px 0;
+    padding: 5px 12px;
+    cursor: pointer;
+    display: inline-block;
+  }
+  .ltr .mainBox {
+    left: 0px !important;
+  }
+  .ltr .mainBox .rightSide a{
+    text-align: left;
+    float: left !important;
+  }
+}
+
+.ltr .loginBox .mainBox {
+  left: initial !important;
+  position: relative !important;
+}
+
+.ltr .loginBox .mainBox .logo {
+  float: none !important;
+}

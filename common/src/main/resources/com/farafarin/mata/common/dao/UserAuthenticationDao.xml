@@ -1,0 +1,131 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farafarin.mata.common.dao.UserAuthenticationDao">
+
+    <resultMap id="userProfileResultMap" type="com.farafarin.mata.common.security.model.UserProfile">
+        <id property="authenticationId" column="authenticationId"/>
+        <result property="userId" column="userId"/>
+        <result property="firstNameFa" column="firstNameFa"/>
+        <result property="lastNameFa" column="lastNameFa"/>
+        <result property="firstNameEn" column="firstNameEn"/>
+        <result property="lastNameEn" column="lastNameEn"/>
+        <result property="nationalCode" column="nationalCode"/>
+        <result property="phoneNumber" column="phoneNumber"/>
+        <result property="email" column="email"/>
+        <result property="birthDate" column="birthDate"/>
+        <result property="expireDate" column="expireDate"/>
+        <result property="status" column="status"/>
+
+        <association property="userCredential" javaType="com.farafarin.mata.common.security.model.UserCredential">
+            <result property="username" column="username"/>
+            <result property="password" column="pssword"/>
+        </association>
+
+        <association property="corporateUserEntity" javaType="com.farafarin.mata.common.entity.CorporateUserEntity">
+            <id property="corporateUserId" column="corporateUserId"/>
+            <result property="status" column="corporateUserStatus"/>
+            <result property="expireDate" column="corporateUserExpireDate"/>
+        </association>
+
+        <collection property="userAuthorities"
+                    ofType="com.farafarin.mata.common.security.model.UserAuthority">
+            <result property="roleId" column="roleId"/>
+            <result property="roleName" column="roleName"/>
+        </collection>
+
+    </resultMap>
+
+    <sql id="userProfileSelect">
+        SELECT
+          ma.authentication_id authenticationId,
+          ma.user_name username,
+          ma.password pssword,
+          mu.user_id userId,
+          mu.first_name_fa firstNameFa,
+          mu.last_name_fa lastNameFa,
+          mu.first_name_en firstNameEn,
+          mu.last_name_en lastNameEn,
+          mu.national_code nationalCode,
+          mu.phone_number phoneNumber,
+          mu.email email,
+          mu.expire_date expireDate,
+          mu.birth_date birthDate,
+          mu.status status,
+          mr.role_id roleId,
+          mr.role_name roleName,
+          cr.corprate_user_id corporateUserId,
+          cr.status corporateUserStatus,
+          cr.expire_date corporateUserExpireDate
+      FROM
+          core.mata_authentication ma
+      INNER JOIN
+          core.mata_user mu
+          ON ma.user_id = mu.user_id
+      INNER JOIN
+          core.mata_user_role mur
+          ON mu.user_id = mur.user_id
+      INNER JOIN
+          core.mata_role mr
+          ON mur.role_id = mr.role_id
+      LEFT OUTER JOIN
+          core.mata_corporate_user cr
+          ON mu.corporate_user_id = cr.corprate_user_id
+    </sql>
+
+    <insert id="insertUserAuthentication"
+            parameterType="com.farafarin.mata.common.entity.UserAuthenticationEntity"
+            useGeneratedKeys='true'
+            keyProperty='model.authenticationId'
+            keyColumn="authentication_id">
+
+        INSERT INTO core.mata_authentication
+        (
+            password
+            ,user_name
+            ,cretae_date
+            ,create_user_name
+            ,update_date
+            ,update_user_name
+            ,user_id
+        )
+        VALUES
+        (
+            #{model.password}
+            ,#{model.userName}
+            ,#{model.createDate}
+            ,#{model.createUserName}
+            ,#{model.updateDate}
+            ,#{model.updateUserName}
+            ,#{model.userId}
+        )
+
+    </insert>
+
+    <update id="resetPassword">
+        UPDATE core.mata_authentication
+        SET
+           password = #{newPassword}
+        WHERE
+          user_id = #{userId};
+    </update>
+
+
+    <select id="authenticate" resultMap="userProfileResultMap">
+      <include refid="userProfileSelect"/>
+      WHERE
+          ma.user_name = #{username}
+            AND
+          ma.password = #{password}
+            AND
+          mu.user_type = #{userType}
+    </select>
+
+    <select id="getUserProfileByUsername" resultMap="userProfileResultMap">
+        <include refid="userProfileSelect"/>
+        WHERE
+          ma.user_name = #{username}
+        AND
+          mu.user_type = #{userType}
+    </select>
+
+</mapper>

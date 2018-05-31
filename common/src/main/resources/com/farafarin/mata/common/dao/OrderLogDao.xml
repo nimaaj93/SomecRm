@@ -1,0 +1,50 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farafarin.mata.common.dao.OrderLogDao">
+    <insert id="insertOrderLog"
+            parameterType="com.farafarin.mata.common.entity.AdminOrderLogEntity"
+            keyProperty="model.logId"
+            keyColumn="log_id"
+            useGeneratedKeys="true">
+        INSERT INTO core.mata_order_log
+        (
+            order_id,
+            user_id,
+            log_title,
+            log_content,
+            writer_first_name_fa,
+            writer_last_name_fa,
+            cretae_date,
+            create_user_name,
+            update_user_name,
+            update_date
+        )
+        VALUES
+        (
+            #{model.orderId},
+            #{model.userId},
+            #{model.logTitle},
+            #{model.logContent},
+            #{model.writerFirstNameFa},
+            #{model.writerLastNameFa},
+            #{model.createDate},
+            #{model.createUserName},
+            #{model.updateUserName},
+            #{model.updateDate}
+        )
+
+    </insert>
+    
+    <select id="getOrderLogForUser" resultType="com.farafarin.mata.common.dto.AdminOrderLogDto">
+        SELECT
+            log_title logTitle,
+            log_content logContent,
+            cretae_date logDateFa,
+            writer_first_name_fa writerFirstNameFa,
+            writer_last_name_fa writerLastNameFa
+        FROM
+            core.mata_order_log ol
+        WHERE
+            ol.order_id = #{orderId}
+    </select>
+</mapper>

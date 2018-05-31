@@ -1,0 +1,33 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.farafarin.mata.admin.back.dao.UserRoleDao">
+
+    <insert id="insertUserRole"
+            parameterType="com.farafarin.mata.admin.back.entity.UserRoleEntity"
+            keyProperty="model.userRoleId"
+            keyColumn="user_role_id"
+            useGeneratedKeys="true">
+
+    INSERT INTO core.mata_user_role
+    (
+    user_id
+    ,role_id
+    ,cretae_date
+    ,create_user_name
+    ,update_date
+    ,update_user_name
+
+    )
+    VALUES
+    (
+    #{model.userId}
+    ,#{model.roleId}
+    ,#{model.createDate}
+    ,#{model.createUserName}
+    ,#{model.updateDate}
+    ,#{model.updateUserName}
+
+    )
+</insert>
+
+</mapper>

@@ -1,0 +1,36 @@
+.loginBox .mainBox .logo{
+    width: 220px;
+    height: 104px;
+    margin: 0 auto;
+  float: none;
+}
+.loginBox .mainBox .boxContent, .mainBox .boxFooter{
+    text-align: center;
+}
+.loginBox .btn{
+    background-color: #1445a0;
+    border: 1px solid #123e8c;
+  color: #FFFFFF;
+}
+.loginBox .btn:hover, .btn:active, .btn:focus{
+    background-color: #174eb6;
+    border: 1px solid #1445a0;
+}
+.loginBox .mainBox .boxFooter a{
+    font-size: 80%;
+}
+.loginBox .inputLable{
+    color: #fff;
+    display: block;
+    margin: 0 0 10px 0;
+}
+
+.mainBox .loginBox {
+  background-color: #FFFFFF;
+}
+
+.mainBox {
+  right: initial;
+  right: auto;
+  position: relative;
+}
